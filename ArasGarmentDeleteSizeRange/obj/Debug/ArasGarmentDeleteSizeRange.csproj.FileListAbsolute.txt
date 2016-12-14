@@ -1,0 +1,11 @@
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\bin\Debug\ArasGarmentDeleteSizeRange.exe.config
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\bin\Debug\ArasGarmentDeleteSizeRange.exe
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\bin\Debug\ArasGarmentDeleteSizeRange.pdb
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\bin\Debug\IOM.dll
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\bin\Debug\IOM.pdb
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\obj\Debug\ArasGarmentDeleteSizeRange.csprojResolveAssemblyReference.cache
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\obj\Debug\ArasGarmentDeleteSizeRange.FrmMain.resources
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\obj\Debug\ArasGarmentDeleteSizeRange.Properties.Resources.resources
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\obj\Debug\ArasGarmentDeleteSizeRange.csproj.GenerateResource.Cache
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\obj\Debug\ArasGarmentDeleteSizeRange.exe
+F:\test\ArasGarmentDeleteSizeRange\ArasGarmentDeleteSizeRange\obj\Debug\ArasGarmentDeleteSizeRange.pdb
