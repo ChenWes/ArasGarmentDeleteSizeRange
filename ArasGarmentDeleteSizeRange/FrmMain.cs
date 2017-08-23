@@ -17,7 +17,7 @@ namespace ArasGarmentDeleteSizeRange
     {
         private HttpServerConnection mc_conn = null;
         private Innovator mc_innovator = null;
-        Thread mc_thread = null;
+        //Thread mc_thread = null;
 
         private enum OperationType
         {
@@ -30,8 +30,8 @@ namespace ArasGarmentDeleteSizeRange
         {
             InitializeComponent();
 
-            SettingConnectionButton(false);
             SettingCheckItemButton(false);
+            SettingConnectionButton(false);
 
             pro_CheckItem.Minimum = 0;
             pro_CheckItem.Maximum = 100;
@@ -75,6 +75,13 @@ namespace ArasGarmentDeleteSizeRange
             btn_Start.Enabled = bln_ConnectionFlag;
 
             txt_SearchAML.Enabled = bln_ConnectionFlag;
+            txt_newSizeRangeName.Enabled = bln_ConnectionFlag;
+            txt_searchSizeRangeTemplate.Enabled = bln_ConnectionFlag;
+            txt_addSizeRange.Enabled = bln_ConnectionFlag;
+
+            chk_GarmentSizeRange.Enabled = bln_ConnectionFlag;
+            chk_SizeRange_D1.Enabled = bln_ConnectionFlag;
+            chk_SizeRange_D1_D2.Enabled = bln_ConnectionFlag;
 
             if (!bln_ConnectionFlag)
             {
@@ -89,7 +96,16 @@ namespace ArasGarmentDeleteSizeRange
 
             btn_StartDelete.Enabled = bln_CheckItemFlag;
             tre_Item.Enabled = bln_CheckItemFlag;
-            txt_RunAMLLog.Enabled = bln_CheckItemFlag;            
+            txt_RunAMLLog.Enabled = bln_CheckItemFlag;
+
+            txt_SearchAML.Enabled = bln_CheckItemFlag;
+            txt_newSizeRangeName.Enabled = bln_CheckItemFlag;
+            txt_searchSizeRangeTemplate.Enabled = bln_CheckItemFlag;
+            txt_addSizeRange.Enabled = bln_CheckItemFlag;
+
+            chk_GarmentSizeRange.Enabled = bln_CheckItemFlag;
+            chk_SizeRange_D1.Enabled = bln_CheckItemFlag;
+            chk_SizeRange_D1_D2.Enabled = bln_CheckItemFlag;
         }
 
         private void ClearCheckInfomation()
@@ -242,95 +258,93 @@ namespace ArasGarmentDeleteSizeRange
                 }
 
 
-                mc_thread = new Thread(() =>
+
+                string l_AML = "<AML>" + txt_SearchAML.Text.Trim() + "</AML>";
+
+                Item l_GetItem = mc_innovator.applyAML(l_AML);
+
+                if (l_GetItem.isError())
                 {
-                    string l_AML = "<AML>" + txt_SearchAML.Text.Trim() + "</AML>";
+                    throw new Exception("AML Run Have Error[" + l_GetItem.getErrorCode() + "]" + l_GetItem.getErrorDetail());
+                }
 
-                    Item l_GetItem = mc_innovator.applyAML(l_AML);
+                if (l_GetItem.getItemCount() == 0)
+                {
+                    throw new Exception("AML Return Item Zero Error[" + l_GetItem.getErrorCode() + "]" + l_GetItem.getErrorDetail());
+                }
 
-                    if (l_GetItem.isError())
+                ClearCheckInfomation();
+
+                if (l_GetItem.getItemCount() > 0)
+                {
+                    //node
+                    TreeNode l_root = new TreeNode("Garment Style", 0, 0);
+
+                    for (int garmentIDX = 0; garmentIDX < l_GetItem.getItemCount(); garmentIDX++)
                     {
-                        throw new Exception("AML Run Have Error[" + l_GetItem.getErrorCode() + "]" + l_GetItem.getErrorDetail());
-                    }
+                        Item l_garmentStyle_Item = l_GetItem.getItemByIndex(garmentIDX);
 
-                    if (l_GetItem.getItemCount() == 0)
-                    {
-                        throw new Exception("AML Return Item Zero Error[" + l_GetItem.getErrorCode() + "]" + l_GetItem.getErrorDetail());
-                    }
+                        Item l_getGarmentSizeRange_Relationships = l_garmentStyle_Item.getRelationships("Garment Size Range");
 
-                    ClearCheckInfomation();
-
-                    if (l_GetItem.getItemCount() > 0)
-                    {
                         //node
-                        TreeNode l_root = new TreeNode("Garment Style", 0, 0);
+                        TreeNode l_garmentStyle_Item_node = new TreeNode(l_garmentStyle_Item.getProperty("item_number", "-"), 0, 0);
+                        l_garmentStyle_Item_node.Tag = l_garmentStyle_Item;
+                        l_garmentStyle_Item_node.ToolTipText = "GarmentStyle:" + l_garmentStyle_Item.getProperty("id");
 
-                        for (int garmentIDX = 0; garmentIDX < l_GetItem.getItemCount(); garmentIDX++)
+                        #region garment style size
+                        for (int garmentSizeRangeIDX = 0; garmentSizeRangeIDX < l_getGarmentSizeRange_Relationships.getItemCount(); garmentSizeRangeIDX++)
                         {
-                            Item l_garmentStyle_Item = l_GetItem.getItemByIndex(garmentIDX);
+                            Item l_getGarmentSizeRange_Item = l_getGarmentSizeRange_Relationships.getItemByIndex(garmentSizeRangeIDX);
 
-                            Item l_getGarmentSizeRange_Relationships = l_garmentStyle_Item.getRelationships("Garment Size Range");
+                            Item l_getGarmentSizeRange_D1_Relationships = l_getGarmentSizeRange_Item.getRelationships("Garment Size Range_D1");
 
                             //node
-                            TreeNode l_garmentStyle_Item_node = new TreeNode(l_garmentStyle_Item.getProperty("item_number", "-"), 0, 0);
-                            l_garmentStyle_Item_node.Tag = l_garmentStyle_Item;
-                            l_garmentStyle_Item_node.ToolTipText = "GarmentStyle:" + l_garmentStyle_Item.getProperty("id");
+                            TreeNode l_getGarmentSizeRange_Item_node = new TreeNode(l_getGarmentSizeRange_Item.getProperty("cn_size", "-"), 0, 0);
+                            l_getGarmentSizeRange_Item_node.Tag = l_getGarmentSizeRange_Item;
+                            l_getGarmentSizeRange_Item_node.ToolTipText = "GarmentStyle SizeRange:" + l_getGarmentSizeRange_Item.getProperty("id");
 
-                            #region garment style size
-                            for (int garmentSizeRangeIDX = 0; garmentSizeRangeIDX < l_getGarmentSizeRange_Relationships.getItemCount(); garmentSizeRangeIDX++)
+                            #region size1
+                            for (int garmentSizeRange_D1_IDX = 0; garmentSizeRange_D1_IDX < l_getGarmentSizeRange_D1_Relationships.getItemCount(); garmentSizeRange_D1_IDX++)
                             {
-                                Item l_getGarmentSizeRange_Item = l_getGarmentSizeRange_Relationships.getItemByIndex(garmentSizeRangeIDX);
+                                Item l_getGarmentSizeRange_D1_Item = l_getGarmentSizeRange_D1_Relationships.getItemByIndex(garmentSizeRange_D1_IDX);
 
-                                Item l_getGarmentSizeRange_D1_Relationships = l_getGarmentSizeRange_Item.getRelationships("Garment Size Range_D1");
-
+                                Item l_getGarmentSizeRange_D1_D2_Item_Relationships = l_getGarmentSizeRange_D1_Item.getRelationships("Garment Size Range_D1_D2");
                                 //node
-                                TreeNode l_getGarmentSizeRange_Item_node = new TreeNode(l_getGarmentSizeRange_Item.getProperty("cn_size", "-"), 0, 0);
-                                l_getGarmentSizeRange_Item_node.Tag = l_getGarmentSizeRange_Item;
-                                l_getGarmentSizeRange_Item_node.ToolTipText = "GarmentStyle SizeRange:" + l_getGarmentSizeRange_Item.getProperty("id");
+                                TreeNode l_getGarmentSizeRange_D1_Item_node = new TreeNode(l_getGarmentSizeRange_D1_Item.getProperty("cn_size", "-"), 0, 0);
+                                l_getGarmentSizeRange_D1_Item_node.Tag = l_getGarmentSizeRange_D1_Item;
+                                l_getGarmentSizeRange_D1_Item_node.ToolTipText = "GarmentStyle SizeRange D1:" + l_getGarmentSizeRange_D1_Item.getProperty("id");
 
-                                #region size1
-                                for (int garmentSizeRange_D1_IDX = 0; garmentSizeRange_D1_IDX < l_getGarmentSizeRange_D1_Relationships.getItemCount(); garmentSizeRange_D1_IDX++)
+                                #region size2
+                                for (int garmentSizeRange_D1_D2_IDX = 0; garmentSizeRange_D1_D2_IDX < l_getGarmentSizeRange_D1_D2_Item_Relationships.getItemCount(); garmentSizeRange_D1_D2_IDX++)
                                 {
-                                    Item l_getGarmentSizeRange_D1_Item = l_getGarmentSizeRange_D1_Relationships.getItemByIndex(garmentSizeRange_D1_IDX);
 
-                                    Item l_getGarmentSizeRange_D1_D2_Item_Relationships = l_getGarmentSizeRange_D1_Item.getRelationships("Garment Size Range_D1_D2");
-                                    //node
-                                    TreeNode l_getGarmentSizeRange_D1_Item_node = new TreeNode(l_getGarmentSizeRange_D1_Item.getProperty("cn_size", "-"), 0, 0);
-                                    l_getGarmentSizeRange_D1_Item_node.Tag = l_getGarmentSizeRange_D1_Item;
-                                    l_getGarmentSizeRange_D1_Item_node.ToolTipText = "GarmentStyle SizeRange D1:" + l_getGarmentSizeRange_D1_Item.getProperty("id");
+                                    Item l_getGarmentSizeRange_D1_D2_Item = l_getGarmentSizeRange_D1_D2_Item_Relationships.getItemByIndex(garmentSizeRange_D1_D2_IDX);
+                                    TreeNode l_getGarmentSizeRange_D1_D2_Item_node = new TreeNode(l_getGarmentSizeRange_D1_D2_Item.getProperty("cn_size2", "-"), 0, 0);
+                                    l_getGarmentSizeRange_D1_D2_Item_node.ToolTipText = "GarmentStyle SizeRange D1-D2:" + l_getGarmentSizeRange_D1_D2_Item.getProperty("id");
 
-                                    #region size2
-                                    for (int garmentSizeRange_D1_D2_IDX = 0; garmentSizeRange_D1_D2_IDX < l_getGarmentSizeRange_D1_D2_Item_Relationships.getItemCount(); garmentSizeRange_D1_D2_IDX++)
-                                    {
-
-                                        Item l_getGarmentSizeRange_D1_D2_Item = l_getGarmentSizeRange_D1_D2_Item_Relationships.getItemByIndex(garmentSizeRange_D1_D2_IDX);
-                                        TreeNode l_getGarmentSizeRange_D1_D2_Item_node = new TreeNode(l_getGarmentSizeRange_D1_D2_Item.getProperty("cn_size2", "-"), 0, 0);
-                                        l_getGarmentSizeRange_D1_D2_Item_node.ToolTipText = "GarmentStyle SizeRange D1-D2:" + l_getGarmentSizeRange_D1_D2_Item.getProperty("id");
-
-                                        l_getGarmentSizeRange_D1_Item_node.Nodes.Add(l_getGarmentSizeRange_D1_D2_Item_node);
-                                    }
-                                    #endregion
-
-                                    l_getGarmentSizeRange_Item_node.Nodes.Add(l_getGarmentSizeRange_D1_Item_node);
+                                    l_getGarmentSizeRange_D1_Item_node.Nodes.Add(l_getGarmentSizeRange_D1_D2_Item_node);
                                 }
                                 #endregion
 
-                                l_garmentStyle_Item_node.Nodes.Add(l_getGarmentSizeRange_Item_node);
+                                l_getGarmentSizeRange_Item_node.Nodes.Add(l_getGarmentSizeRange_D1_Item_node);
                             }
                             #endregion
 
-                            l_root.Nodes.Add(l_garmentStyle_Item_node);
+                            l_garmentStyle_Item_node.Nodes.Add(l_getGarmentSizeRange_Item_node);
                         }
+                        #endregion
 
-                        AddGarmentStyleNode(l_root);
-
-                        //tre_Item.Nodes.Add(l_root);
-                        //tre_Item.Nodes[0].Expand();
+                        l_garmentStyle_Item_node.Collapse();
+                        l_root.Nodes.Add(l_garmentStyle_Item_node);
                     }
 
-                    SettingCheckItemButton(true);
+                    AddGarmentStyleNode(l_root);
 
-                });
+                    //tre_Item.Nodes.Add(l_root);
+                    //tre_Item.Nodes[0].Expand();
+                }
+
+                SettingCheckItemButton(true);
 
             }
             catch (Exception ex)
@@ -431,6 +445,7 @@ namespace ArasGarmentDeleteSizeRange
                         garmentNode.ImageIndex = l_GarmentsizeRange_Flag ? 3 : 2;
                         tre_Item.Refresh();
 
+                        #region if have new size range , will add to style
                         if (!string.IsNullOrEmpty(txt_newSizeRangeName.Text.Trim()))
                         {
                             StringBuilder l_sizeAML = new StringBuilder();
@@ -486,6 +501,7 @@ namespace ArasGarmentDeleteSizeRange
                             garmentNode.Collapse();
                             tre_Item.Refresh();
                         }
+                        #endregion
 
                     }
                     #endregion

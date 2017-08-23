@@ -42,6 +42,9 @@
             this.txt_DB = new System.Windows.Forms.TextBox();
             this.txt_serverurl = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txt_searchSizeRangeTemplate = new System.Windows.Forms.TextBox();
+            this.txt_newSizeRangeName = new System.Windows.Forms.TextBox();
+            this.txt_addSizeRange = new System.Windows.Forms.TextBox();
             this.tre_Item = new System.Windows.Forms.TreeView();
             this.imageLiarbry = new System.Windows.Forms.ImageList(this.components);
             this.txt_RunAMLLog = new System.Windows.Forms.RichTextBox();
@@ -56,9 +59,11 @@
             this.txt_AML_SizeRange_D1_D2 = new System.Windows.Forms.TextBox();
             this.txt_AML_SizeRange_D1 = new System.Windows.Forms.TextBox();
             this.txt_AML_SizeRange = new System.Windows.Forms.TextBox();
-            this.txt_addSizeRange = new System.Windows.Forms.TextBox();
-            this.txt_newSizeRangeName = new System.Windows.Forms.TextBox();
-            this.txt_searchSizeRangeTemplate = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -174,6 +179,11 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.txt_searchSizeRangeTemplate);
             this.panel2.Controls.Add(this.txt_newSizeRangeName);
             this.panel2.Controls.Add(this.txt_addSizeRange);
@@ -186,6 +196,34 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(824, 513);
             this.panel2.TabIndex = 2;
+            // 
+            // txt_searchSizeRangeTemplate
+            // 
+            this.txt_searchSizeRangeTemplate.Location = new System.Drawing.Point(4, 90);
+            this.txt_searchSizeRangeTemplate.Multiline = true;
+            this.txt_searchSizeRangeTemplate.Name = "txt_searchSizeRangeTemplate";
+            this.txt_searchSizeRangeTemplate.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txt_searchSizeRangeTemplate.Size = new System.Drawing.Size(274, 58);
+            this.txt_searchSizeRangeTemplate.TabIndex = 9;
+            this.txt_searchSizeRangeTemplate.Text = resources.GetString("txt_searchSizeRangeTemplate.Text");
+            // 
+            // txt_newSizeRangeName
+            // 
+            this.txt_newSizeRangeName.Location = new System.Drawing.Point(569, 18);
+            this.txt_newSizeRangeName.Name = "txt_newSizeRangeName";
+            this.txt_newSizeRangeName.Size = new System.Drawing.Size(248, 21);
+            this.txt_newSizeRangeName.TabIndex = 8;
+            this.txt_newSizeRangeName.Text = "MDS Long Sleeve Size (INCH)";
+            // 
+            // txt_addSizeRange
+            // 
+            this.txt_addSizeRange.Location = new System.Drawing.Point(284, 18);
+            this.txt_addSizeRange.Multiline = true;
+            this.txt_addSizeRange.Name = "txt_addSizeRange";
+            this.txt_addSizeRange.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txt_addSizeRange.Size = new System.Drawing.Size(279, 51);
+            this.txt_addSizeRange.TabIndex = 7;
+            this.txt_addSizeRange.Text = resources.GetString("txt_addSizeRange.Text");
             // 
             // tre_Item
             // 
@@ -237,11 +275,11 @@
             // 
             // txt_SearchAML
             // 
-            this.txt_SearchAML.Location = new System.Drawing.Point(3, 3);
+            this.txt_SearchAML.Location = new System.Drawing.Point(3, 18);
             this.txt_SearchAML.Multiline = true;
             this.txt_SearchAML.Name = "txt_SearchAML";
             this.txt_SearchAML.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_SearchAML.Size = new System.Drawing.Size(275, 66);
+            this.txt_SearchAML.Size = new System.Drawing.Size(275, 51);
             this.txt_SearchAML.TabIndex = 2;
             this.txt_SearchAML.Text = resources.GetString("txt_SearchAML.Text");
             // 
@@ -329,33 +367,50 @@
             this.txt_AML_SizeRange.Text = "<Item type=\"Garment Size Range\" where=\"source_id=\'{0}\'\" action=\"delete\"><source_i" +
     "d>{0}</source_id></Item>";
             // 
-            // txt_addSizeRange
+            // label1
             // 
-            this.txt_addSizeRange.Location = new System.Drawing.Point(284, 3);
-            this.txt_addSizeRange.Multiline = true;
-            this.txt_addSizeRange.Name = "txt_addSizeRange";
-            this.txt_addSizeRange.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_addSizeRange.Size = new System.Drawing.Size(279, 66);
-            this.txt_addSizeRange.TabIndex = 7;
-            this.txt_addSizeRange.Text = resources.GetString("txt_addSizeRange.Text");
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(101, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "search style AML";
             // 
-            // txt_newSizeRangeName
+            // label2
             // 
-            this.txt_newSizeRangeName.Location = new System.Drawing.Point(569, 5);
-            this.txt_newSizeRangeName.Name = "txt_newSizeRangeName";
-            this.txt_newSizeRangeName.Size = new System.Drawing.Size(248, 21);
-            this.txt_newSizeRangeName.TabIndex = 8;
-            this.txt_newSizeRangeName.Text = "MDS Long Sleeve Size (INCH)";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 72);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 12);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "get size range AML";
             // 
-            // txt_searchSizeRangeTemplate
+            // label3
             // 
-            this.txt_searchSizeRangeTemplate.Location = new System.Drawing.Point(4, 75);
-            this.txt_searchSizeRangeTemplate.Multiline = true;
-            this.txt_searchSizeRangeTemplate.Name = "txt_searchSizeRangeTemplate";
-            this.txt_searchSizeRangeTemplate.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_searchSizeRangeTemplate.Size = new System.Drawing.Size(274, 73);
-            this.txt_searchSizeRangeTemplate.TabIndex = 9;
-            this.txt_searchSizeRangeTemplate.Text = resources.GetString("txt_searchSizeRangeTemplate.Text");
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(282, 3);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(131, 12);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "update size range AML";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(569, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(119, 12);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "new size range name";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(284, 136);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(347, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "if newSizeRangeName is not empty , will add new sizeRange";
             // 
             // FrmMain
             // 
@@ -410,6 +465,11 @@
         private System.Windows.Forms.TextBox txt_addSizeRange;
         private System.Windows.Forms.TextBox txt_newSizeRangeName;
         private System.Windows.Forms.TextBox txt_searchSizeRangeTemplate;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
